@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "635835909870",
+    "project_id": "cobadulu-93bec",
+    "storage_bucket": "cobadulu-93bec.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635835909870:android:1024152fffff631b1355ff",
+        "android_client_info": {
+          "package_name": "com.example.rsusakina"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635835909870-sk72as28v032no5f4rqf4ebcac4b2taj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUypRAByogqlBG7LSPGk6OxZxcOv7W3CA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635835909870-sk72as28v032no5f4rqf4ebcac4b2taj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
