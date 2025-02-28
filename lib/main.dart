@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:rsusakina/main_page.dart';
 import 'package:rsusakina/screen/register.dart';
 import 'package:rsusakina/screen/signin.dart';
+import 'package:rsusakina/screen/tiket.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => SignInLogin(),
         '/home': (context) => MainPage(),
         '/register': (context) => Register(),
+        '/tiket': (context) => TiketPendaftaran(),
       },
       theme: ThemeData(brightness: Brightness.light, fontFamily: 'Lato'),
     );
