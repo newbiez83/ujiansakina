@@ -69,25 +69,6 @@ class _TiketPendaftaranState extends State<TiketPendaftaran> {
     );
   }
 
-  _checkDiff(DateTime _date) {
-    var diff = DateTime.now().difference(_date).inHours;
-    if (diff > 2) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  _compareDate(String _date) {
-    if (_dateFormatter(DateTime.now().toString())
-            .compareTo(_dateFormatter(_date)) ==
-        0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -130,12 +111,24 @@ class _TiketPendaftaranState extends State<TiketPendaftaran> {
               }
               return snapshot.data!.size == 0
                   ? Center(
-                      child: Text(
-                        'No Appointment Scheduled',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 18,
-                        ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.network(
+                            'https://cdn-icons-png.flaticon.com/128/4826/4826310.png',
+                            scale: 2,
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            'Belum Ada Riwayat Pendaftaran.',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
                       ),
                     )
                   : ListView.builder(
@@ -159,31 +152,17 @@ class _TiketPendaftaranState extends State<TiketPendaftaran> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 5),
-                                    child: Text(
-                                      'ssdf',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
                                   Text(
-                                    document['tanggalkunjungan'],
+                                    'Tanggal ${document['tanggalkunjungan']}',
                                     style: TextStyle(
-                                        color: Colors.green,
-                                        fontSize: 18,
+                                        color: Colors.black,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   SizedBox(
                                     width: 0,
                                   ),
                                 ],
-                              ),
-                              subtitle: Padding(
-                                padding: const EdgeInsets.only(left: 5),
-                                child: Text('tgagag'),
                               ),
                               children: [
                                 Padding(
@@ -198,18 +177,36 @@ class _TiketPendaftaranState extends State<TiketPendaftaran> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "Patient name: ",
+                                            "Nama Pasien: ${document['namapasien']}",
                                             style: TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 14,
                                             ),
                                           ),
                                           SizedBox(
                                             height: 10,
                                           ),
                                           Text(
-                                            "Time: ",
+                                            "Poli Tujuan: ${document['politujuan']}",
                                             style: TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            "Dokter: ${document['dokter']}",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            "Keluhan: ${document['keluhan']}",
+                                            style: TextStyle(
+                                              fontSize: 14,
                                             ),
                                           ),
                                         ],

@@ -3,7 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:intl/intl.dart';
-import 'package:rsusakina/screen/input_select.dart';
+import 'package:rsusakina/widget/input_select.dart';
+import 'package:rsusakina/widget/input_select_dokter.dart';
 
 class PasienBaruDaftar extends StatefulWidget {
   const PasienBaruDaftar({super.key});
@@ -20,15 +21,18 @@ class _PasienBaruDaftarState extends State<PasienBaruDaftar> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _keluhanController = TextEditingController();
   final TextEditingController _jajalan = TextEditingController();
+  final TextEditingController _dokterController = TextEditingController();
 
   FocusNode f1 = FocusNode();
   FocusNode f2 = FocusNode();
   FocusNode f3 = FocusNode();
   final FocusNode _jajalFocus = FocusNode();
+  final FocusNode _dokterFokus = FocusNode();
 
   @override
   void dispose() {
     _jajalFocus.dispose();
+    _dokterFokus.dispose();
     super.dispose();
   }
 
@@ -71,8 +75,9 @@ class _PasienBaruDaftarState extends State<PasienBaruDaftar> {
       builder: (BuildContext context) {
         return GiffyDialog.image(
           Image.network(
-            "https://cdn-icons-png.flaticon.com/256/17976/17976179.png",
-            height: 200,
+            "https://sakinaidaman.com/wp-content/uploads/elementor/thumbs/Logo-Sakina-qqjll7myultpdn6rtvavxk7jvezwbfj3xjqi2n0jxw.png",
+            height: 50,
+            width: 50,
             fit: BoxFit.cover,
           ),
           title: Text(
@@ -95,45 +100,6 @@ class _PasienBaruDaftarState extends State<PasienBaruDaftar> {
     );
   }
 
-  // showAlertDialog(BuildContext context) {
-  //   // set up the button
-  //   Widget okButton = TextButton(
-  //     child: Text(
-  //       "OK",
-  //       style: TextStyle(fontWeight: FontWeight.bold),
-  //     ),
-  //     onPressed: () {
-  //       Navigator.of(context)
-  //           .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
-  //     },
-  //   );
-
-  //   // set up the AlertDialog
-  //   AlertDialog alert = AlertDialog(
-  //     title: Text(
-  //       "Terkirim!",
-  //       style: TextStyle(
-  //         fontWeight: FontWeight.bold,
-  //       ),
-  //     ),
-  //     content: Text(
-  //       "Pendaftaran/Booking Jadwal Pasien Berkunjung Berhasil.",
-  //       style: TextStyle(),
-  //     ),
-  //     actions: [
-  //       okButton,
-  //     ],
-  //   );
-
-  //   // show the dialog
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return alert;
-  //     },
-  //   );
-  // }
-
   Future<void> _createAppointment() async {
     // print(dateUTC + ' ' + date_Time + ':00');
     FirebaseFirestore.instance
@@ -145,7 +111,7 @@ class _PasienBaruDaftarState extends State<PasienBaruDaftar> {
       'namapasien': _nameController.text,
       'tanggalkunjungan': dateUTC,
       'politujuan': _jajalan.text,
-      'dokter': dokterValue,
+      'dokter': _dokterController.text,
       'keluhan': _keluhanController.text,
       // 'doctor': _doctorController.text,
       // 'date': DateTime.parse(dateUTC + ' ' + date_Time + ':00'),
@@ -160,7 +126,7 @@ class _PasienBaruDaftarState extends State<PasienBaruDaftar> {
       'namapasien': _nameController.text,
       'tanggalkunjungan': dateUTC,
       'politujuan': selectedValue,
-      'dokter': dokterValue,
+      'dokter': _dokterController.text,
       'keluhan': _keluhanController.text,
       // 'doctor': _doctorController.text,
       // 'date': DateTime.parse(dateUTC + ' ' + date_Time + ':00'),
@@ -203,70 +169,18 @@ class _PasienBaruDaftarState extends State<PasienBaruDaftar> {
                     SizedBox(
                       height: 10,
                     ),
-                    StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance
-                          .collection("dokter")
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return Center(
-                            child: Text("Some error occured ${snapshot.error}"),
-                          );
-                        }
-                        List<DropdownMenuItem> dokterItems = [];
-                        if (!snapshot.hasData) {
-                          return const CircularProgressIndicator();
-                        } else {
-                          final selectDokter =
-                              snapshot.data?.docs.reversed.toList();
-                          if (selectDokter != null) {
-                            for (var dokter in selectDokter) {
-                              dokterItems.add(
-                                DropdownMenuItem(
-                                  value: dokter.id,
-                                  child: Text(
-                                    dokter['nama_dokter'],
-                                  ),
-                                ),
-                              );
-                            }
-                          }
-                          return Padding(
-                            padding: const EdgeInsets.all(0.0),
-                            child: Container(
-                              padding:
-                                  const EdgeInsets.only(right: 15, left: 15),
-                              decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.grey, width: 1),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: DropdownButton(
-                                underline: const SizedBox(),
-                                isExpanded: true,
-                                hint: const Text(
-                                  "Pilih Dokter",
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                value: dokterValue,
-                                items: dokterItems,
-                                onChanged: (value) {
-                                  setState(() {
-                                    dokterValue = value;
-                                  });
-                                },
-                              ),
-                            ),
-                          );
-                        }
-                      },
+                    SelectDokterInput(
+                      controller: _dokterController,
+                      hint: "Dokter Tujuan",
+                      textFocus: _dokterFokus,
+
+                      // onChanged: () {},
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     Container(
                       alignment: Alignment.center,
-                      height: 60,
                       width: MediaQuery.of(context).size.width,
                       child: Stack(
                         alignment: Alignment.centerRight,
@@ -367,7 +281,7 @@ class _PasienBaruDaftarState extends State<PasienBaruDaftar> {
                       textInputAction: TextInputAction.next,
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 10,
                     ),
                     TextFormField(
                       controller: _keluhanController,

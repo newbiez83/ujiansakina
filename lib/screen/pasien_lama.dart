@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:rsusakina/screen/input_select.dart';
+import 'package:rsusakina/widget/input_select.dart';
 
 class PasienLamaDaftar extends StatefulWidget {
   const PasienLamaDaftar({super.key});

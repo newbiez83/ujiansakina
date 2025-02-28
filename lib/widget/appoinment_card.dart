@@ -125,7 +125,7 @@ class _AppoinmentCardState extends State<AppoinmentCard> {
                                           children: [
                                             CircleAvatar(
                                               backgroundImage: NetworkImage(
-                                                  'https://sakinaidaman.com/wp-content/uploads/2020/08/dr.-Rina-Fatmawati-Sp.OG-2-min-1536x1536.jpg'),
+                                                  'https://cdn-icons-png.flaticon.com/128/11500/11500575.png'),
                                             ),
                                             SizedBox(
                                               width: 10,
@@ -144,7 +144,7 @@ class _AppoinmentCardState extends State<AppoinmentCard> {
                                                     height: 2,
                                                   ),
                                                   Text(
-                                                    'Dokter Spesialis Obsteri & Ginekologi',
+                                                    document['politujuan'],
                                                     style: TextStyle(
                                                         color: Colors.black),
                                                     overflow: TextOverflow.fade,
@@ -179,7 +179,7 @@ class _AppoinmentCardState extends State<AppoinmentCard> {
                                                 width: 5,
                                               ),
                                               Text(
-                                                'Mon, July 29',
+                                                document['tanggalkunjungan'],
                                                 style: TextStyle(
                                                     color: Colors.black),
                                               ),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 class CustomTextField extends StatefulWidget {
@@ -9,7 +10,8 @@ class CustomTextField extends StatefulWidget {
   final FocusNode textFocus;
   final FocusNode? nextFocus;
 
-  CustomTextField({
+  const CustomTextField({
+    super.key,
     required this.hint,
     required this.controller,
     this.nextFocus,
@@ -44,19 +46,35 @@ class _CustomTextFieldState extends State<CustomTextField> {
       context: context,
       barrierDismissible: false,
       builder: (context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
+        return GiffyDialog.image(
+          Image.network(
+            "https://sakinaidaman.com/wp-content/uploads/elementor/thumbs/Logo-Sakina-qqjll7myultpdn6rtvavxk7jvezwbfj3xjqi2n0jxw.png",
+            height: 50,
+            width: 50,
+            fit: BoxFit.contain,
           ),
-          child: StreamSelect(
-            poliTujuan: (String poli) {
-              widget.controller.text = poli;
-              // widget.sink.add(namajeniscuti);
-              Future.delayed(const Duration(milliseconds: 500), () {
-                Navigator.pop(context, 'selected');
-              });
-            },
+          title: Text(
+            'Silahkan Pilih Poli Tujuan',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
+          content: Container(
+            child: StreamSelect(
+              poliTujuan: (String poli) {
+                widget.controller.text = poli;
+                // widget.sink.add(namajeniscuti);
+                Future.delayed(const Duration(milliseconds: 500), () {
+                  Navigator.pop(context, 'selected');
+                });
+              },
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'CANCEL'),
+              child: const Text('CANCEL'),
+            ),
+          ],
         );
       },
     ).then(
@@ -149,8 +167,11 @@ class _StreamSelectState extends State<StreamSelect> {
               final DocumentSnapshot documentSnapshot =
                   streamSnapshot.data!.docs[index];
               return ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 28.0),
-                leading: Icon(OctIcons.arrow_right),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 5.0),
+                leading: Icon(
+                  OctIcons.diff_added,
+                  size: 15,
+                ),
                 title: Text(
                   documentSnapshot['nama_poli'],
                   style: const TextStyle(
